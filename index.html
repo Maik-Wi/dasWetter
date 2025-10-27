@@ -82,15 +82,6 @@
     }
     a{ color:var(--accent); text-decoration:none }
     .app{ max-width:1000px; margin:0 auto; padding:16px; display:grid; gap:var(--gap) }
-    header{ display:grid; gap:8px }
-    .top{ display:flex; gap:10px; align-items:center; justify-content:space-between }
-    .brand{ display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px }
-    .pill{ display:inline-flex; gap:8px; align-items:center; border:1px solid var(--ring); background:var(--panel); border-radius:999px; padding:6px 10px }
-    .controls{ display:flex; flex-wrap:wrap; gap:8px }
-    .btn{ border:1px solid var(--ring); background:var(--panel); color:var(--text); padding:8px 12px; border-radius:12px; cursor:pointer; font-weight:700 }
-    .btn:active{ transform:translateY(1px) }
-    input[type="text"]{ background:var(--panel); border:1px solid var(--ring); color:var(--text); padding:8px 12px; border-radius:12px; min-width:220px }
-    select{ background:var(--panel); border:1px solid var(--ring); color:var(--text); padding:8px 12px; border-radius:12px; min-width:180px }
     .card{ background:var(--panel); border:1px solid var(--ring); border-radius:var(--radius); padding:14px }
     main{ display:grid; gap:var(--gap) }
     .hero{
@@ -332,7 +323,7 @@
     .legend-bar{ width:12px; height:10px; border-radius:3px; background:rgba(148,197,255,.5); display:inline-block }
     .chart{ width:100%; height:260px; display:block; overflow:visible }
     .chart .precip-bar{ fill:rgba(148,197,255,.48); }
-    .chart .temp-line{ fill:none; stroke:#4ade80; stroke-width:2.2; stroke-linecap:round; }
+    .chart .temp-line{ fill:none; stroke:#4ade80; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
     .chart .temp-chip{ pointer-events:none; }
     .chart .temp-chip-bg{ fill:var(--temp-chip-bg); }
     .chart .temp-label{ fill:rgba(255,255,255,.95); font-size:11px; font-weight:700; text-anchor:middle; paint-order:stroke; stroke:rgba(2,6,23,.55); stroke-width:.8px; font-variant-numeric:tabular-nums; }
@@ -342,7 +333,7 @@
       .legend-line{ background:#22c55e; }
       .legend-bar{ background:rgba(96,165,250,.55); }
       .legend-range{ color:rgba(71,85,105,.8); }
-      .chart .temp-line{ stroke:#22c55e; }
+      .chart .temp-line{ stroke:#22c55e; stroke-linejoin:round; }
       .chart .precip-bar{ fill:rgba(96,165,250,.44); }
       .chart .temp-label{ fill:rgba(30,41,59,.95); stroke:rgba(255,255,255,.92); }
       .chart .time-label{ fill:rgba(71,85,105,.9); }
@@ -355,22 +346,20 @@
       .warn-severity-extreme{ background:linear-gradient(90deg, rgba(239,68,68,.3), transparent); }
     }
 
-    .solar-card{ display:grid; gap:16px; text-align:center; justify-items:center; }
+    .solar-card{ display:grid; gap:16px; justify-items:center; text-align:center; }
+    .solar-card .card-heading{ justify-self:start; text-align:left; }
     .solar-arc{ width:100%; max-width:320px; }
     .solar-arc svg{ width:100%; height:auto; overflow:visible }
     .solar-path{ fill:none; stroke:rgba(148,163,184,.45); stroke-width:4; stroke-linecap:round; }
-    .solar-base{ stroke:rgba(148,163,184,.25); stroke-width:2; stroke-linecap:round; }
     .solar-body{ fill:#fbbf24; stroke:#f59e0b; stroke-width:3; transition:all .6s ease; }
-    .solar-moon{ fill:#cbd5f5; stroke:#94a3b8; stroke-width:2; transition:all .6s ease; opacity:0; }
-    .solar-times{ width:100%; max-width:320px; display:flex; justify-content:space-between; gap:24px; font-size:13px; color:var(--muted); }
+    .solar-times{ width:100%; max-width:320px; display:flex; justify-content:space-between; gap:24px; font-size:13px; color:var(--muted); justify-self:stretch; margin:0 auto; }
     .solar-time{ display:grid; gap:4px; text-align:center; font-variant-numeric:tabular-nums; }
     .solar-time-label{ text-transform:uppercase; letter-spacing:.08em; font-size:11px; }
     .solar-status{ margin:0; font-size:13px; color:var(--muted); }
     @media (prefers-color-scheme: light){
       .solar-path{ stroke:rgba(148,163,184,.35); }
-      .solar-base{ stroke:rgba(148,163,184,.25); }
       .solar-body{ fill:#facc15; stroke:#f59e0b; }
-      .solar-moon{ fill:#cbd5f5; stroke:#94a3b8; }
+      .moon-base{ fill:#fde68a; }
     }
 
     .astro-layout{ display:grid; gap:var(--gap); }
@@ -380,19 +369,26 @@
     @media (min-width: 620px){ .moon-layout{ grid-template-columns: auto minmax(0,1fr); } }
     .moon-visual{ display:grid; gap:12px; justify-items:center; }
     .moon-phase-graphic{ width:120px; height:120px; display:flex; justify-content:center; align-items:center; }
-    .moon-phase-svg{ width:100%; height:100%; display:block; filter:drop-shadow(0 6px 18px rgba(15,23,42,.35)); }
+    .moon-phase-svg{ width:100%; height:100%; display:block; }
     .moon-phase-panel{ display:grid; gap:8px; align-content:start; }
-    .moon-base{ fill:var(--moon-dark); }
-    .moon-light-shape{ fill:var(--moon-light); transition:all .6s ease; }
-    .moon-terminator{ stroke:rgba(255,255,255,.22); stroke-width:1.5; fill:none; transition:all .6s ease; opacity:.8; }
+    .moon-base{ fill:#fde68a; }
+    .moon-light-shape{ fill:var(--panel); transition:all .6s ease; }
     .moon-phase-subheading{ margin:0; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
     .moon-phase-current{ display:grid; gap:4px; font-size:14px; font-weight:600; text-align:center; }
     .moon-illumination{ font-size:13px; color:var(--muted); font-weight:400; }
     .moon-phase-list{ width:100%; max-width:320px; display:grid; gap:6px; font-size:13px; color:var(--muted); text-align:left; }
-    .moon-phase-item{ display:flex; justify-content:space-between; align-items:center; gap:12px; font-variant-numeric:tabular-nums; padding:6px 10px; border:1px dashed var(--ring); border-radius:10px; }
-    .moon-phase-item span:first-child{ font-weight:600; color:var(--text); }
-    .moon-phase-item span:last-child{ font-weight:500; }
+    .moon-phase-item{ display:flex; align-items:center; gap:12px; font-variant-numeric:tabular-nums; padding:8px 6px; }
+    .moon-phase-icon{ width:32px; height:32px; display:inline-flex; justify-content:center; align-items:center; flex-shrink:0; }
+    .moon-phase-icon svg{ width:100%; height:100%; display:block; }
+    .moon-phase-info{ display:flex; flex-direction:column; gap:2px; color:var(--text); }
+    .moon-phase-label{ font-weight:600; }
+    .moon-phase-date{ font-size:12px; color:var(--muted); }
     .moon-phase-empty{ color:var(--muted); font-size:13px; }
+    .moon-rise-set{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:8px; justify-items:center; width:100%; }
+    .moon-rise-item{ display:grid; gap:2px; text-align:center; }
+    .moon-rise-set-label{ font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); }
+    .moon-rise-set-time{ font-size:13px; font-weight:600; color:var(--text); }
+    .moon-rise-note{ margin:0; font-size:11px; color:var(--muted); text-align:center; grid-column:1 / -1; }
 
     .card-heading{ margin:0; font-size:18px; font-weight:700; letter-spacing:.02em; color:var(--text); }
 
@@ -478,8 +474,6 @@
     .warn-severity-extreme{ border-left-color:#ef4444; background:linear-gradient(90deg, rgba(239,68,68,.22), transparent); }
 
     footer{ color:var(--muted); font-size:12px }
-    footer summary{ cursor:pointer; color:var(--text); font-weight:700; font-size:13px; }
-    footer summary:focus-visible{ outline:2px solid var(--accent); outline-offset:4px }
     .credits-body{ display:grid; gap:6px; margin-top:8px }
     .credits-body p{ margin:0 }
     .kbd{ font-family:var(--mono); padding:.1em .4em; border:1px solid var(--ring); border-radius:6px; background:var(--panel) }
@@ -502,22 +496,6 @@
 </head>
 <body>
   <div class="app">
-    <header>
-      <div class="top">
-        <div style="flex:1"></div>
-        <div class="controls">
-          <button class="btn" id="geoBtn">📍 Standort nutzen</button>
-          <input id="coord" type="text" placeholder="lat,lon (z. B. 52.52,13.40)" aria-label="Koordinaten"/>
-          <button class="btn" id="goBtn">Los</button>
-          <select id="favoritesSelect" aria-label="Gespeicherte Orte">
-            <option value="">Favorit wählen …</option>
-          </select>
-          <button class="btn" id="saveFavBtn" title="Aktuelle Koordinaten speichern">☆ Merken</button>
-          <button class="btn" id="removeFavBtn" title="Ausgewählten Favoriten löschen" disabled>✕ Löschen</button>
-        </div>
-      </div>
-    </header>
-
     <main>
       <section class="card hero" id="heroCard" aria-live="polite" data-scene="cloudy" data-env="plain">
         <div class="hero-scene" aria-hidden="true">
@@ -599,13 +577,11 @@
 
       <section class="astro-layout">
         <div class="card solar-card" id="solarCard">
-      <h3 class="card-heading">Tageslicht</h3>
+          <h3 class="card-heading">Tageslicht</h3>
           <div class="solar-arc">
-            <svg viewBox="0 0 200 120" role="img" aria-label="Verlauf von Sonne oder Mond">
-              <path class="solar-base" d="M20 100 H180"/>
+            <svg viewBox="0 0 200 120" role="img" aria-label="Tageslichtverlauf">
               <path class="solar-path" d="M20 100 A80 80 0 0 1 180 100"/>
               <circle id="solarSun" class="solar-body" cx="20" cy="100" r="10"/>
-              <path id="solarMoon" class="solar-moon" d=""/>
             </svg>
           </div>
           <div class="solar-times">
@@ -633,16 +609,26 @@
                   </defs>
                   <circle cx="60" cy="60" r="50" class="moon-base"></circle>
                   <circle cx="60" cy="60" r="50" class="moon-light-shape" id="moonLight" clip-path="url(#moonClip)"></circle>
-                  <path id="moonTerminator" class="moon-terminator" d=""></path>
                 </svg>
               </div>
               <div class="moon-phase-current">
                 <span id="moonPhaseName">—</span>
                 <span class="moon-illumination" id="moonIllumination">—</span>
               </div>
+              <div class="moon-rise-set">
+                <div class="moon-rise-item">
+                  <span class="moon-rise-set-label">Mondaufgang</span>
+                  <span class="moon-rise-set-time" id="moonRiseTime">—</span>
+                </div>
+                <div class="moon-rise-item">
+                  <span class="moon-rise-set-label">Monduntergang</span>
+                  <span class="moon-rise-set-time" id="moonSetTime">—</span>
+                </div>
+              </div>
+              <p class="moon-rise-note hidden" id="moonRiseNote"></p>
             </div>
             <div class="moon-phase-panel">
-              <p class="moon-phase-subheading">Nächste Tage</p>
+              <p class="moon-phase-subheading">Nächste Hauptphasen</p>
               <div class="moon-phase-list" id="moonPhaseList" aria-live="polite"></div>
             </div>
           </div>
@@ -658,12 +644,12 @@
     </main>
 
     <footer class="card credits" id="creditsDetails">
-      <h3 class="credits-heading">Das Kleingedruckte</h3>
+      <h3 class="card-heading">Das Kleingedruckte</h3>
       <div class="credits-body" id="creditsBody">
-        <p>Wetterdaten liefert der Deutsche Wetterdienst, Produkt MOSMIX, lizenziert unter CC BY 4.0 und konsumiert via Bright Sky.</p>
+        <p>Wetterdaten liefert der Deutsche Wetterdienst, Produkt MOSMIX, lizenziert unter CC BY 4.0 und bezogen via Bright Sky.</p>
         <p>Dank an Bas Milius für die Meteocons-Symbole und die MIT-Lizenz, die freie Nutzung ermöglicht. Der Rest des Codes steht unter GPL-3.0-or-later.</p>
         <p>Keine Tracker, keine Cookies, kein verstecktes Theater – nur Wetterinformationen.</p>
-        <p class="credits-update" id="creditsUpdated">Zuletzt aufgefrischt: —</p>
+        <p class="credits-update" id="creditsUpdated">Die Daten wurden zuletzt aktualisiert: —</p>
       </div>
     </footer>
   </div>
@@ -685,9 +671,14 @@ const WARN_SEVERITY_LABEL = {
   Extreme:"Stufe 4"
 };
 const STORAGE_SETTINGS = "daswetter-settings";
-const STORAGE_FAVORITES = "daswetter-favorites";
+const SYNODIC_DAYS = 29.53058867;
+const MOON_PHASE_EVENTS = [
+  {key:"new", label:"Neumond", value:0},
+  {key:"first-quarter", label:"Erstes Viertel", value:0.25},
+  {key:"full", label:"Vollmond", value:0.5},
+  {key:"last-quarter", label:"Letztes Viertel", value:0.75}
+];
 let SETTINGS = { last:null };
-let FAVORITES = [];
 const $ = s=>document.querySelector(s);
 const $id = id=>document.getElementById(id);
 
@@ -765,11 +756,6 @@ function saveJsonStorage(key, value){
   }
 }
 
-function coordKey(lat, lon){
-  if(!Number.isFinite(lat) || !Number.isFinite(lon)) return "";
-  return `${lat.toFixed(5)},${lon.toFixed(5)}`;
-}
-
 function loadSettings(){
   SETTINGS = loadJsonStorage(STORAGE_SETTINGS, {last:null}) || {last:null};
 }
@@ -778,133 +764,10 @@ function saveSettings(){
   saveJsonStorage(STORAGE_SETTINGS, SETTINGS);
 }
 
-function loadFavorites(){
-  FAVORITES = loadJsonStorage(STORAGE_FAVORITES, []);
-  if(!Array.isArray(FAVORITES)) FAVORITES = [];
-  if(!FAVORITES.length){
-    FAVORITES = Object.entries(TEST_COORDS).map(([key, value])=>({
-      name: key.charAt(0).toUpperCase()+key.slice(1),
-      lat: value.lat,
-      lon: value.lon
-    }));
-  }
-}
-
-function saveFavorites(){
-  saveJsonStorage(STORAGE_FAVORITES, FAVORITES);
-}
-
 function rememberLastLocation(lat, lon){
   SETTINGS.last = {lat, lon};
   saveSettings();
-  syncFavoriteSelection(lat, lon);
 }
-
-function updateFavoritesUI(){
-  const select = $id("favoritesSelect");
-  if(!select) return;
-  const current = select.value;
-  while(select.options.length>1){ select.remove(1); }
-  FAVORITES.forEach(fav=>{
-    const opt = document.createElement("option");
-    opt.value = coordKey(fav.lat, fav.lon);
-    opt.textContent = fav.name || `${fav.lat.toFixed(3)}, ${fav.lon.toFixed(3)}`;
-    if(opt.value === current) opt.selected = true;
-    select.appendChild(opt);
-  });
-  S.favorites = FAVORITES.slice();
-  const removeBtn = $id("removeFavBtn");
-  if(removeBtn) removeBtn.disabled = !select.value;
-}
-
-function addFavorite(fav){
-  if(!fav || typeof fav.lat!="number" || typeof fav.lon!="number") return;
-  const existing = FAVORITES.find(f=>Math.abs(f.lat - fav.lat)<1e-3 && Math.abs(f.lon - fav.lon)<1e-3);
-  if(existing){
-    existing.name = fav.name;
-  }else{
-    FAVORITES.push(fav);
-  }
-  saveFavorites();
-  updateFavoritesUI();
-}
-
-function removeFavorite(lat, lon){
-  FAVORITES = FAVORITES.filter(f=>!(Math.abs(f.lat-lat)<1e-6 && Math.abs(f.lon-lon)<1e-6));
-  saveFavorites();
-  updateFavoritesUI();
-}
-
-function syncFavoriteSelection(lat, lon){
-  const select = $id("favoritesSelect");
-  if(!select) return;
-  const key = coordKey(lat, lon);
-  let found = false;
-  for(const option of select.options){
-    if(option.value === key && key){
-      select.value = key;
-      found = true;
-      break;
-    }
-  }
-  if(!found){
-    select.selectedIndex = 0;
-  }
-  const removeBtn = $id("removeFavBtn");
-  if(removeBtn) removeBtn.disabled = !found;
-}
-
-function setCoordInput(lat, lon){
-  const input = $id("coord");
-  if(!input) return;
-  const nLat = Number(lat);
-  const nLon = Number(lon);
-  if(!Number.isFinite(nLat) || !Number.isFinite(nLon)) return;
-  input.value = coordKey(nLat, nLon);
-}
-
-function handleSaveFavorite(){
-  if(!S.coords) return;
-  const {lat, lon} = S.coords;
-  if(!Number.isFinite(lat) || !Number.isFinite(lon)) return;
-  const name = S.place && S.place!==UNKNOWN_PLACE ? S.place : `${lat.toFixed(3)}, ${lon.toFixed(3)}`;
-  addFavorite({name, lat, lon});
-  const select = $id("favoritesSelect");
-  if(select){
-    select.value = coordKey(lat, lon);
-  }
-  const removeBtn = $id("removeFavBtn");
-  if(removeBtn) removeBtn.disabled = !select || !select.value;
-}
-
-function handleRemoveFavorite(){
-  const select = $id("favoritesSelect");
-  if(!select) return;
-  const value = select.value;
-  if(!value) return;
-  const [latStr, lonStr] = value.split(",");
-  const lat = parseFloat(latStr); const lon = parseFloat(lonStr);
-  if(!Number.isFinite(lat) || !Number.isFinite(lon)) return;
-  removeFavorite(lat, lon);
-  select.selectedIndex = 0;
-  const removeBtn = $id("removeFavBtn");
-  if(removeBtn) removeBtn.disabled = true;
-}
-
-function handleFavoriteChange(){
-  const select = $id("favoritesSelect");
-  if(!select) return;
-  const value = select.value;
-  const removeBtn = $id("removeFavBtn");
-  if(removeBtn) removeBtn.disabled = !value;
-  if(!value) return;
-  const [latStr, lonStr] = value.split(",");
-  const lat = parseFloat(latStr); const lon = parseFloat(lonStr);
-  if(!Number.isFinite(lat) || !Number.isFinite(lon)) return;
-  setCoordInput(lat, lon);
-  loadAll(lat, lon).catch(e=>console.error(e));
-}
-
 const BrightSky = {
   base:"https://api.brightsky.dev",
   async current(lat, lon){
@@ -975,15 +838,7 @@ const BrightSky = {
   }
 };
 
-const S = { coords:null, place:"—", placeFallback:false, environment:"plain", current:null, hourly:[], daily:[], warnings:[], favorites:[] };
-
-const TEST_COORDS = {
-  berlin:{lat:52.520008, lon:13.404954},
-  münchen:{lat:48.137154, lon:11.576124},
-  frankfurt:{lat:50.110924, lon:8.682127},
-  kiel:{lat:54.323293, lon:10.122765}
-};
-window.TEST_COORDS = TEST_COORDS;
+const S = { coords:null, place:"—", placeFallback:false, environment:"plain", current:null, hourly:[], daily:[], warnings:[] };
 
 function fmt(n,d=0){ return (n==null||Number.isNaN(n))?"—":Number(n).toFixed(d); }
 function clamp(v,min,max){ return Math.min(Math.max(v,min), max); }
@@ -1035,10 +890,9 @@ function normalizePhase(value){
 function computeMoonPhase(date){
   const d = date instanceof Date ? new Date(date) : new Date(date);
   if(Number.isNaN(d.getTime())) return null;
-  const synodic = 29.53058867; // days
   const epoch = Date.UTC(2000, 0, 6, 18, 14, 0); // known new moon
   const days = (d.getTime() - epoch) / 86400000;
-  const phase = (days / synodic) % 1;
+  const phase = (days / SYNODIC_DAYS) % 1;
   return normalizePhase(phase);
 }
 
@@ -1048,22 +902,207 @@ const ICON_MAP = {
   "cloudy":"i-cloudy","fog":"i-cloudy","rain":"i-rain","sleet":"i-snow","snow":"i-snow","wind":"i-wind"
 };
 
+const RAD = Math.PI / 180;
+const MS_PER_HOUR = 3600000;
+const MS_PER_DAY = 86400000;
+const JULIAN_1970 = 2440588;
+const JULIAN_2000 = 2451545;
+const OBLIQUITY = 23.4397 * RAD;
+const SOLAR_PERIHELION = RAD * 102.9372;
+
+function toJulian(date){
+  return date.valueOf() / MS_PER_DAY - 0.5 + JULIAN_1970;
+}
+function toDays(date){
+  return toJulian(date) - JULIAN_2000;
+}
+function rightAscension(l, b){
+  return Math.atan2(Math.sin(l) * Math.cos(OBLIQUITY) - Math.tan(b) * Math.sin(OBLIQUITY), Math.cos(l));
+}
+function declination(l, b){
+  return Math.asin(Math.sin(b) * Math.cos(OBLIQUITY) + Math.cos(b) * Math.sin(OBLIQUITY) * Math.sin(l));
+}
+function azimuth(H, phi, dec){
+  return Math.atan2(Math.sin(H), Math.cos(H) * Math.sin(phi) - Math.tan(dec) * Math.cos(phi));
+}
+function altitude(H, phi, dec){
+  return Math.asin(Math.sin(phi) * Math.sin(dec) + Math.cos(phi) * Math.cos(dec) * Math.cos(H));
+}
+function siderealTime(d, lw){
+  return RAD * (280.16 + 360.9856235 * d) - lw;
+}
+function astroRefraction(h){
+  if(h < 0) h = 0;
+  return 0.0002967 / Math.tan(h + 0.00312536 / (h + 0.08901179));
+}
+function moonCoords(d){
+  const L = RAD * (218.316 + 13.176396 * d);
+  const M = RAD * (134.963 + 13.064993 * d);
+  const F = RAD * (93.272 + 13.229350 * d);
+  const l = L + RAD * 6.289 * Math.sin(M);
+  const b = RAD * 5.128 * Math.sin(F);
+  const dt = 385001 - 20905 * Math.cos(M);
+  return {
+    ra:rightAscension(l, b),
+    dec:declination(l, b),
+    dist:dt
+  };
+}
+function getMoonPosition(date, lat, lon){
+  const lw = RAD * -lon;
+  const phi = RAD * lat;
+  const d = toDays(date);
+  const c = moonCoords(d);
+  const H = siderealTime(d, lw) - c.ra;
+  const h = altitude(H, phi, c.dec);
+  const ref = astroRefraction(h);
+  return {
+    azimuth: azimuth(H, phi, c.dec),
+    altitude: h + ref,
+    distance: c.dist
+  };
+}
+function getMoonTimes(date, lat, lon){
+  if(!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+  const t = new Date(date);
+  t.setHours(0,0,0,0);
+  let h0 = getMoonPosition(t, lat, lon).altitude - 0.133 * RAD;
+  let riseHour = null;
+  let setHour = null;
+  let h1, h2;
+  for(let i=1;i<=24;i+=2){
+    const t1 = new Date(t.getTime() + i * MS_PER_HOUR);
+    const t2 = new Date(t.getTime() + (i+1) * MS_PER_HOUR);
+    h1 = getMoonPosition(t1, lat, lon).altitude - 0.133 * RAD;
+    h2 = getMoonPosition(t2, lat, lon).altitude - 0.133 * RAD;
+    const a = (h0 + h2) / 2 - h1;
+    const b = (h2 - h0) / 2;
+    let roots = 0;
+    let x1 = 0;
+    let x2 = 0;
+    if(Math.abs(a) < 1e-12){
+      const denom = h2 - h1;
+      if(Math.abs(denom) > 1e-12){
+        const x = -h1 / denom;
+        if(Math.abs(x) <= 1){
+          if(h0 < 0) riseHour = i + x;
+          else setHour = i + x;
+        }
+      }
+    }else{
+      const xe = -b / (2 * a);
+      const d = b * b - 4 * a * h1;
+      if(d >= 0){
+        const dx = Math.sqrt(d) / (Math.abs(a) * 2);
+        x1 = xe + dx;
+        x2 = xe - dx;
+        if(Math.abs(x1) <= 1) roots++;
+        if(Math.abs(x2) <= 1) roots++;
+        if(x1 < -1) x1 = x2;
+      }
+      if(roots === 1){
+        if(h0 < 0) riseHour = i + x1;
+        else setHour = i + x1;
+      }else if(roots === 2){
+        riseHour = i + Math.min(x1, x2);
+        setHour = i + Math.max(x1, x2);
+      }
+    }
+    if(riseHour != null && setHour != null) break;
+    h0 = h2;
+  }
+  const result = {rise:null, set:null, alwaysUp:false, alwaysDown:false};
+  if(riseHour != null) result.rise = new Date(t.getTime() + riseHour * MS_PER_HOUR);
+  if(setHour != null) result.set = new Date(t.getTime() + setHour * MS_PER_HOUR);
+  if(result.rise==null && result.set==null){
+    if(h0 > 0) result.alwaysUp = true;
+    else result.alwaysDown = true;
+  }
+  return result;
+}
+
+function fromJulian(j){
+  return new Date((j + 0.5 - JULIAN_1970) * MS_PER_DAY);
+}
+function solarMeanAnomaly(d){
+  return RAD * (357.5291 + 0.98560028 * d);
+}
+function eclipticLongitude(M){
+  const C = RAD * (1.9148 * Math.sin(M) + 0.02 * Math.sin(2*M) + 0.0003 * Math.sin(3*M));
+  return M + C + SOLAR_PERIHELION + Math.PI;
+}
+function getSunTimes(date, lat, lon){
+  if(!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+  const lw = RAD * -lon;
+  const phi = RAD * lat;
+  const d = toDays(date);
+  const n = Math.round(d - 0.0009 - lw / (2 * Math.PI));
+  const ds = n + 0.0009 + lw / (2 * Math.PI);
+  const M = solarMeanAnomaly(ds);
+  const L = eclipticLongitude(M);
+  const dec = declination(L, 0);
+  const Jtransit = JULIAN_2000 + ds + 0.0053 * Math.sin(M) - 0.0069 * Math.sin(2 * L);
+  const h0 = -0.83 * RAD;
+  const cosOmega = (Math.sin(h0) - Math.sin(phi) * Math.sin(dec)) / (Math.cos(phi) * Math.cos(dec));
+  if(cosOmega <= -1){
+    return {rise:null, set:null, alwaysUp:true, alwaysDown:false};
+  }
+  if(cosOmega >= 1){
+    return {rise:null, set:null, alwaysUp:false, alwaysDown:true};
+  }
+  const omega = Math.acos(Math.min(Math.max(cosOmega, -1), 1));
+  const Jrise = Jtransit - omega / (2 * Math.PI);
+  const Jset = Jtransit + omega / (2 * Math.PI);
+  return {
+    rise: fromJulian(Jrise),
+    set: fromJulian(Jset),
+    alwaysUp:false,
+    alwaysDown:false
+  };
+}
+
 function moonPhaseName(phase){
   if(phase==null) return "Unbekannt";
   const p = normalizePhase(phase);
-  const phases = [
-    {limit:0.03, name:"Neumond"},
-    {limit:0.23, name:"Zunehmende Sichel"},
-    {limit:0.27, name:"Erstes Viertel"},
-    {limit:0.48, name:"Zunehmender Mond"},
-    {limit:0.52, name:"Vollmond"},
-    {limit:0.73, name:"Abnehmender Mond"},
-    {limit:0.77, name:"Letztes Viertel"},
-    {limit:0.97, name:"Abnehmende Sichel"},
-    {limit:1.01, name:"Neumond"}
-  ];
-  const match = phases.find(entry=>p < entry.limit);
-  return match ? match.name : "Neumond";
+  if(p < 0.03 || p >= 0.97) return "Neumond";
+  if(p < 0.27) return "Zunehmende Sichel";
+  if(p < 0.32) return "Erstes Viertel";
+  if(p < 0.47) return "Zunehmender Mond";
+  if(p < 0.53) return "Vollmond";
+  if(p < 0.68) return "Abnehmender Mond";
+  if(p < 0.74) return "Letztes Viertel";
+  return "Abnehmende Sichel";
+}
+
+function moonPhaseIconSvg(key){
+  const size = 32;
+  const radius = 12;
+  const center = size / 2;
+  const stroke = "rgba(148,163,184,.45)";
+  const glow = "#fde68a";
+  const base = "var(--panel)";
+  const muted = "rgba(148,163,184,.4)";
+  if(key === "full"){
+    return `<svg viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><circle cx="${center}" cy="${center}" r="${radius}" fill="${glow}" stroke="${stroke}" stroke-width="1.5"/></svg>`;
+  }
+  if(key === "first-quarter"){
+    return `<svg viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><circle cx="${center}" cy="${center}" r="${radius}" fill="${base}" stroke="${stroke}" stroke-width="1.5"/><path d="M ${center} ${center - radius} A ${radius} ${radius} 0 0 1 ${center + radius} ${center} A ${radius} ${radius} 0 0 1 ${center} ${center + radius} L ${center} ${center} Z" fill="${glow}"/></svg>`;
+  }
+  if(key === "last-quarter"){
+    return `<svg viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><circle cx="${center}" cy="${center}" r="${radius}" fill="${glow}" stroke="${stroke}" stroke-width="1.5"/><path d="M ${center} ${center - radius} A ${radius} ${radius} 0 0 0 ${center - radius} ${center} A ${radius} ${radius} 0 0 0 ${center} ${center + radius} L ${center} ${center} Z" fill="${base}"/></svg>`;
+  }
+  if(key === "new"){
+    return `<svg viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><circle cx="${center}" cy="${center}" r="${radius}" fill="${muted}" stroke="${stroke}" stroke-width="1.5"/></svg>`;
+  }
+  return `<svg viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg"><circle cx="${center}" cy="${center}" r="${radius}" fill="${glow}" stroke="${stroke}" stroke-width="1.5"/></svg>`;
+}
+
+function formatMoonPhaseDate(date){
+  if(!(date instanceof Date) || Number.isNaN(date.getTime())) return "—";
+  const months = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
+  const day = date.getDate().toString().padStart(2,"0");
+  const month = months[date.getMonth()] || "";
+  return `${day}. ${month}`;
 }
 
 function formatDateLabel(dateStr){
@@ -1798,7 +1837,6 @@ function renderSolarCard(){
   const sunsetEl = $id("solarSunset");
   const statusEl = $id("solarStatus");
   const sunEl = $id("solarSun");
-  const moonEl = $id("solarMoon");
 
   const now = S.current && S.current.timestamp ? new Date(S.current.timestamp) : new Date();
   const today = now.toISOString().slice(0,10);
@@ -1818,15 +1856,61 @@ function renderSolarCard(){
   if(endFrac - startFrac < 0.05){ endFrac = clamp(startFrac + 0.05, 0, 1); }
 
   const totalMinutes = 1440;
-  const nowMinutes = now.getHours()*60 + now.getMinutes();
+  const startOfDay = new Date(now);
+  startOfDay.setHours(0,0,0,0);
+  const nowMinutesRaw = Math.round((now.getTime() - startOfDay.getTime())/60000);
+  const nowMinutes = Math.min(Math.max(nowMinutesRaw, 0), totalMinutes);
   const nowFrac = clamp(nowMinutes/totalMinutes, 0, 1);
 
-  const sunriseDate = daylight.sunrise ? new Date(daylight.sunrise) : fractionToDate(now, startFrac);
-  const sunsetDate = daylight.sunset ? new Date(daylight.sunset) : fractionToDate(now, endFrac);
+  const sunriseSource = S.current && (S.current.sunrise || S.current.sunrise_time);
+  const sunsetSource = S.current && (S.current.sunset || S.current.sunset_time);
+  let sunriseDate = sunriseSource ? new Date(sunriseSource) : null;
+  let sunsetDate = sunsetSource ? new Date(sunsetSource) : null;
+  if(!sunriseDate || Number.isNaN(sunriseDate.getTime())) sunriseDate = daylight.sunrise ? new Date(daylight.sunrise) : null;
+  if(!sunriseDate || Number.isNaN(sunriseDate.getTime())) sunriseDate = fractionToDate(now, startFrac);
+  if(!sunsetDate || Number.isNaN(sunsetDate.getTime())) sunsetDate = daylight.sunset ? new Date(daylight.sunset) : null;
+  if(!sunsetDate || Number.isNaN(sunsetDate.getTime())) sunsetDate = fractionToDate(now, endFrac);
+
+  let sunAlwaysUp = false;
+  let sunAlwaysDown = false;
+  const coords = S.coords || {};
+  const lat = Number(coords.lat);
+  const lon = Number(coords.lon);
+  if(Number.isFinite(lat) && Number.isFinite(lon)){
+    const sunTimes = getSunTimes(now, lat, lon);
+    if(sunTimes){
+      sunAlwaysUp = !!sunTimes.alwaysUp;
+      sunAlwaysDown = !!sunTimes.alwaysDown;
+      if(sunAlwaysUp){
+        sunriseDate = null;
+        sunsetDate = null;
+        startFrac = 0;
+        endFrac = 1;
+      }else if(sunAlwaysDown){
+        sunriseDate = null;
+        sunsetDate = null;
+        startFrac = 0;
+        endFrac = 0;
+      }else{
+        if(sunTimes.rise) sunriseDate = sunTimes.rise;
+        if(sunTimes.set) sunsetDate = sunTimes.set;
+        if(sunriseDate && sunsetDate){
+          const sunriseMinutesRaw = Math.round((sunriseDate.getTime() - startOfDay.getTime())/60000);
+          const sunsetMinutesRaw = Math.round((sunsetDate.getTime() - startOfDay.getTime())/60000);
+          const sunriseMinutes = Math.min(Math.max(sunriseMinutesRaw, 0), totalMinutes);
+          const sunsetMinutes = Math.min(Math.max(sunsetMinutesRaw, sunriseMinutes + 1), totalMinutes);
+          startFrac = clamp(sunriseMinutes/totalMinutes, 0, 1);
+          endFrac = clamp(sunsetMinutes/totalMinutes, startFrac + 0.01, 1);
+          if(endFrac - startFrac < 0.05) endFrac = clamp(startFrac + 0.05, 0, 1);
+        }
+      }
+    }
+  }
+
   const adjSunrise = sunriseDate ? new Date(sunriseDate) : null;
   const adjSunset = sunsetDate ? new Date(sunsetDate) : null;
   if(adjSunrise && adjSunrise.getTime() <= now.getTime()) adjSunrise.setDate(adjSunrise.getDate()+1);
-  if(adjSunset && adjSunset.getTime() <= now.getTime() && nowFrac <= endFrac){ adjSunset.setDate(adjSunset.getDate()+1); }
+  if(adjSunset && adjSunset.getTime() <= now.getTime() && !sunAlwaysDown && endFrac > startFrac){ adjSunset.setDate(adjSunset.getDate()+1); }
 
   if(sunriseEl) sunriseEl.textContent = sunriseDate ? timeHM(sunriseDate) : "—";
   if(sunsetEl) sunsetEl.textContent = sunsetDate ? timeHM(sunsetDate) : "—";
@@ -1840,48 +1924,37 @@ function renderSolarCard(){
     return {x, y};
   };
 
-  const moonPath = (cxMoon, cyMoon, radius)=>{
-    const inner = radius * 0.6;
-    return `M ${cxMoon-radius} ${cyMoon} A ${radius} ${radius} 0 0 1 ${cxMoon+radius} ${cyMoon} A ${radius} ${radius} 0 0 0 ${cxMoon-inner} ${cyMoon} A ${inner} ${inner} 0 0 0 ${cxMoon-radius} ${cyMoon} Z`;
-  };
+  let isDay = nowFrac >= startFrac && nowFrac <= endFrac;
+  if(sunAlwaysUp) isDay = true;
+  if(sunAlwaysDown) isDay = false;
 
-  const isDay = nowFrac >= startFrac && nowFrac <= endFrac;
   let statusText = "";
   if(isDay){
     const span = endFrac - startFrac;
     const progress = span > 0 ? (nowFrac - startFrac)/span : 0;
-    const pos = positionOnArc(progress);
     if(sunEl){
+      const pos = positionOnArc(progress);
       sunEl.setAttribute("cx", pos.x.toFixed(2));
       sunEl.setAttribute("cy", pos.y.toFixed(2));
       sunEl.style.opacity = "1";
     }
-    if(moonEl){
-      moonEl.style.opacity = "0";
-    }
-    const minutesLeft = minutesBetween(now, adjSunset || sunsetDate);
-    statusText = minutesLeft!=null ? `Noch ${formatDuration(minutesLeft)} Tageslicht` : "Sonne ist über dem Horizont";
-  }else{
-    const nightSpan = (1 - endFrac) + startFrac;
-    let offset;
-    if(nowFrac >= endFrac){
-      offset = nowFrac - endFrac;
+    if(sunAlwaysUp){
+      statusText = "Sonne bleibt über dem Horizont";
     }else{
-      offset = (1 - endFrac) + nowFrac;
+      const minutesLeft = minutesBetween(now, adjSunset || sunsetDate);
+      statusText = minutesLeft!=null ? `Noch ${formatDuration(minutesLeft)} Tageslicht` : "Sonne ist über dem Horizont";
     }
-    const nightProgress = nightSpan > 0 ? offset / nightSpan : 0;
-    const arcProgress = 1 - clamp(nightProgress, 0, 1);
-    const pos = positionOnArc(arcProgress);
+  }else{
     if(sunEl){
       sunEl.style.opacity = "0";
     }
-    if(moonEl){
-      moonEl.setAttribute("d", moonPath(pos.x, pos.y, 10));
-      moonEl.style.opacity = "1";
+    if(sunAlwaysDown){
+      statusText = "Sonne bleibt unter dem Horizont";
+    }else{
+      const nextSunrise = adjSunrise || (sunriseDate ? new Date(sunriseDate.getTime()+86400000) : null);
+      const sunriseDiff = minutesBetween(now, nextSunrise);
+      statusText = sunriseDiff!=null ? `Sonne in ${formatDuration(sunriseDiff)}` : "Nacht";
     }
-    const nextSunrise = adjSunrise || (sunriseDate ? new Date(sunriseDate.getTime()+86400000) : null);
-    const sunriseDiff = minutesBetween(now, nextSunrise);
-    statusText = sunriseDiff!=null ? `Sonne in ${formatDuration(sunriseDiff)}` : "Nacht";
   }
   if(statusEl) statusEl.textContent = statusText || "—";
 }
@@ -1894,10 +1967,12 @@ function renderMoonCard(){
   const illumEl = $id("moonIllumination");
   const list = $id("moonPhaseList");
   const moonLight = $id("moonLight");
-  const moonTerminator = $id("moonTerminator");
+  const riseEl = $id("moonRiseTime");
+  const setEl = $id("moonSetTime");
+  const noteEl = $id("moonRiseNote");
 
-  const days = S.daily || [];
-  const currentPhaseValue = computeMoonPhase(S.current && S.current.timestamp ? new Date(S.current.timestamp) : new Date());
+  const now = S.current && S.current.timestamp ? new Date(S.current.timestamp) : new Date();
+  const currentPhaseValue = computeMoonPhase(now);
   const phaseName = moonPhaseName(currentPhaseValue);
   const illuminationPercent = currentPhaseValue==null ? null : clamp(Math.round(((1 - Math.cos(2*Math.PI*currentPhaseValue)) / 2) * 100), 0, 100);
 
@@ -1914,47 +1989,82 @@ function renderMoonCard(){
     moonLight.setAttribute("cx", cxLight.toFixed(2));
   }
 
-  if(moonTerminator){
-    const d = cxLight - base;
-    const absD = Math.abs(d);
-    if(absD >= 2*R){
-      moonTerminator.setAttribute("d", "");
-      moonTerminator.style.opacity = "0";
-    }else if(absD < 0.5){
-      moonTerminator.setAttribute("d", "");
-      moonTerminator.style.opacity = "0";
+  let moonRise = null;
+  let moonSet = null;
+  let moonNote = "";
+  const coords = S.coords || {};
+  const lat = Number(coords.lat);
+  const lon = Number(coords.lon);
+  if(Number.isFinite(lat) && Number.isFinite(lon)){
+    const moonTimes = getMoonTimes(now, lat, lon);
+    if(moonTimes){
+      if(moonTimes.rise instanceof Date && !Number.isNaN(moonTimes.rise.getTime())){
+        moonRise = moonTimes.rise;
+      }
+      if(moonTimes.set instanceof Date && !Number.isNaN(moonTimes.set.getTime())){
+        moonSet = moonTimes.set;
+      }
+      if(moonTimes.alwaysUp) moonNote = "Bleibt heute über dem Horizont.";
+      else if(moonTimes.alwaysDown) moonNote = "Bleibt heute unter dem Horizont.";
+    }
+  }
+  if(riseEl) riseEl.textContent = moonRise ? timeHM(moonRise) : "—";
+  if(setEl) setEl.textContent = moonSet ? timeHM(moonSet) : "—";
+  if(noteEl){
+    if(moonNote){
+      noteEl.textContent = moonNote;
+      noteEl.classList.remove("hidden");
     }else{
-      const cy = 60;
-      const x = base + d/2;
-      const h = Math.sqrt(R*R - (d*d)/4);
-      const sweep = d > 0 ? 1 : 0;
-      const path = `M ${x.toFixed(2)} ${(cy - h).toFixed(2)} A ${R} ${R} 0 0 ${sweep} ${x.toFixed(2)} ${(cy + h).toFixed(2)}`;
-      moonTerminator.setAttribute("d", path);
-      moonTerminator.style.opacity = ".8";
+      noteEl.textContent = "";
+      noteEl.classList.add("hidden");
     }
   }
 
   if(list){
     list.innerHTML = "";
-    const upcoming = days.slice(0,7);
-    if(!upcoming.length){
+    if(currentPhaseValue==null){
       const empty = document.createElement("div");
       empty.className = "moon-phase-empty";
       empty.textContent = "Keine Mondphasen verfügbar.";
       list.appendChild(empty);
     }else{
-      upcoming.forEach(d=>{
-        const dateObj = new Date(d.date+"T12:00:00Z");
-        const phase = computeMoonPhase(dateObj);
+      const upcoming = [];
+      let basePhase = currentPhaseValue;
+      let baseDate = new Date(now);
+      for(let i=0;i<4;i++){
+        let best=null;
+        MOON_PHASE_EVENTS.forEach(evt=>{
+          let diff = (evt.value - basePhase + 1) % 1;
+          if(diff < 1e-5) diff += 1;
+          if(!best || diff < best.diff){
+            best = {evt, diff};
+          }
+        });
+        if(!best) break;
+        const date = new Date(baseDate.getTime() + best.diff * SYNODIC_DAYS * 86400000);
+        upcoming.push({evt:best.evt, date});
+        basePhase = normalizePhase(basePhase + best.diff);
+        baseDate = date;
+      }
+
+      upcoming.forEach(entry=>{
         const item = document.createElement("div");
         item.className = "moon-phase-item";
-        const left = document.createElement("span");
-        left.textContent = formatDateLabel(d.date);
-        const right = document.createElement("span");
-        const illum = phase==null ? null : Math.round(((1 - Math.cos(2*Math.PI*phase)) / 2) * 100);
-        right.textContent = phase==null ? "—" : `${moonPhaseName(phase)} (${illum}%)`;
-        item.appendChild(left);
-        item.appendChild(right);
+        const iconSpan = document.createElement("span");
+        iconSpan.className = "moon-phase-icon";
+        iconSpan.innerHTML = moonPhaseIconSvg(entry.evt.key);
+        const infoSpan = document.createElement("span");
+        infoSpan.className = "moon-phase-info";
+        const labelEl = document.createElement("span");
+        labelEl.className = "moon-phase-label";
+        labelEl.textContent = entry.evt.label;
+        const dateEl = document.createElement("span");
+        dateEl.className = "moon-phase-date";
+        dateEl.textContent = formatMoonPhaseDate(entry.date);
+        infoSpan.appendChild(labelEl);
+        infoSpan.appendChild(dateEl);
+        item.appendChild(iconSpan);
+        item.appendChild(infoSpan);
         list.appendChild(item);
       });
     }
@@ -1963,7 +2073,6 @@ function renderMoonCard(){
 
 async function loadAll(lat, lon){
   S.coords = {lat, lon};
-  setCoordInput(lat, lon);
   const cur = await BrightSky.current(lat, lon);
   S.current = (cur||{}).weather || cur || {};
   S.environment = "plain";
@@ -2001,44 +2110,8 @@ async function loadAll(lat, lon){
   rememberLastLocation(lat, lon);
 }
 
-function wire(){
-  const geoBtn = $id("geoBtn");
-  const goBtn = $id("goBtn");
-  const saveFavBtn = $id("saveFavBtn");
-  const removeFavBtn = $id("removeFavBtn");
-  const favSelect = $id("favoritesSelect");
-  const coordInput = $id("coord");
-  if(geoBtn) geoBtn.addEventListener("click", async ()=>{
-    if(!("geolocation" in navigator)){ alert("Geolocation not available"); return; }
-    navigator.geolocation.getCurrentPosition(async pos=>{
-      const {latitude:lat, longitude:lon} = pos.coords;
-      try{ await loadAll(lat, lon); }catch(e){ console.error(e); alert("API Fehler"); }
-    }, err=>alert(err.message), {enableHighAccuracy:true, timeout:10000});
-  });
-  if(goBtn) goBtn.addEventListener("click", async ()=>{
-    const val = $("#coord").value.trim();
-    const m = val.match(/^\s*([+-]?\d+(\.\d+)?)\s*,\s*([+-]?\d+(\.\d+)?)\s*$/);
-    if(!m) { alert("Bitte lat,lon eingeben (z. B. 52.52,13.40)"); return; }
-    const lat=+m[1], lon=+m[3];
-    try{ await loadAll(lat, lon); }catch(e){ console.error(e); alert("API Fehler"); }
-  });
-  if(saveFavBtn) saveFavBtn.addEventListener("click", ()=>{ handleSaveFavorite(); });
-  if(removeFavBtn) removeFavBtn.addEventListener("click", ()=>{ handleRemoveFavorite(); });
-  if(favSelect) favSelect.addEventListener("change", ()=>{ handleFavoriteChange(); });
-  if(coordInput) coordInput.addEventListener("keydown", e=>{
-    if(e.key === "Enter"){ e.preventDefault(); goBtn?.click(); }
-  });
-}
-
 async function init(){
   loadSettings();
-  loadFavorites();
-  S.favorites = FAVORITES.slice();
-  updateFavoritesUI();
-  if(SETTINGS.last && Number.isFinite(SETTINGS.last.lat) && Number.isFinite(SETTINGS.last.lon)){
-    syncFavoriteSelection(SETTINGS.last.lat, SETTINGS.last.lon);
-  }
-  wire();
   let loaded = false;
   const tryLoadStored = async ()=>{
     if(loaded) return;

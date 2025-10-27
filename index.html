@@ -21,21 +21,25 @@
       --bg:#0b0f19; --panel:#121826; --text:#e6ecf2; --muted:#a9b4c0;
       --accent:#7dd3fc; --danger:#ff6b6b; --ok:#22c55e; --ring:#2b3448;
       --radius:16px; --gap:12px;
+      --bg-layers: radial-gradient(1200px 600px at 70% -10%, rgba(125,211,252,.12), transparent 60%), var(--bg);
+      --hero-bg-layers: linear-gradient(135deg, rgba(125,211,252,.18), rgba(59,130,246,.05) 60%), var(--panel);
       --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       color-scheme: dark;
     }
     @media (prefers-color-scheme: light){
-      :root{ --bg:#f6f8fb; --panel:#fff; --text:#121826; --muted:#4b5563; --accent:#0369a1; --ring:#e5e7eb; color-scheme: light;}
+      :root{ --bg:#f6f8fb; --panel:#fff; --text:#121826; --muted:#4b5563; --accent:#0369a1; --ring:#e5e7eb; --bg-layers: radial-gradient(1200px 600px at 70% -10%, rgba(3,105,161,.08), transparent 60%), var(--bg); --hero-bg-layers: linear-gradient(135deg, rgba(3,105,161,.08), rgba(15,118,110,.05) 65%), var(--panel); color-scheme: light;}
       meta[name="theme-color"]{ content:#f6f8fb; }
     }
     *{box-sizing:border-box}
     html,body{height:100%;margin:0}
     body{
-      font-family:var(--font); background:
-        radial-gradient(1200px 600px at 70% -10%, rgba(125,211,252,.12), transparent 60%),
-        var(--bg);
+      font-family:var(--font);
+      background:var(--bg-layers, var(--bg));
+      background-color:var(--bg);
+      background-repeat:no-repeat;
       color:var(--text); line-height:1.35; -webkit-tap-highlight-color: transparent;
+      transition:background-color .6s ease;
     }
     a{ color:var(--accent); text-decoration:none }
     .app{ max-width:1000px; margin:0 auto; padding:16px; display:grid; gap:var(--gap) }
@@ -49,10 +53,29 @@
     input[type="text"]{ background:var(--panel); border:1px solid var(--ring); color:var(--text); padding:8px 12px; border-radius:12px; min-width:220px }
     .card{ background:var(--panel); border:1px solid var(--ring); border-radius:var(--radius); padding:14px }
     main{ display:grid; gap:var(--gap) }
-    .hero{ display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px }
+    .hero{
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      align-items:start;
+      align-content:start;
+      gap:12px;
+      position:relative;
+      overflow:hidden;
+      background:var(--hero-bg-layers, var(--panel));
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+      transition:background 1s ease;
+      min-height:max(320px, 60vh);
+      padding:32px;
+    }
+    .hero>*{ position:relative; z-index:1; }
     .hero h1{ margin:0; font-size:28px }
     .hero .meta{ color:var(--muted); font-size:14px }
     .hero .big{ font-size:56px; font-weight:900; letter-spacing:-.02em }
+    .hero-icon{ color:var(--text); display:block; }
+    .hero-icon use{ fill:currentColor; stroke:currentColor; }
+    .card svg use{ fill:currentColor; stroke:currentColor; }
 
     .grid-2{ display:grid; gap:var(--gap) }
     @media (min-width: 860px){ .grid-2{ grid-template-columns: 1.2fr .8fr } }
@@ -68,6 +91,10 @@
     .thumb{ position:absolute; top:-6px; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:2px }
 
     footer{ color:var(--muted); font-size:12px }
+    footer summary{ cursor:pointer; color:var(--text); font-weight:700; font-size:13px; }
+    footer summary:focus-visible{ outline:2px solid var(--accent); outline-offset:4px }
+    .credits-body{ display:grid; gap:6px; margin-top:8px }
+    .credits-body p{ margin:0 }
     .kbd{ font-family:var(--mono); padding:.1em .4em; border:1px solid var(--ring); border-radius:6px; background:var(--panel) }
     .hidden{ display:none !important }
   </style>
@@ -80,6 +107,7 @@
     <symbol id="i-cloudy" viewBox="0 0 24 24"><path d="M5 16h10a4 4 0 0 0-1-7 5 5 0 0 0-9 3 3 3 0 0 0 0 4z"/></symbol>
     <symbol id="i-rain" viewBox="0 0 24 24"><path d="M5 15h11a4 4 0 0 0-1-7 5 5 0 0 0-9 3 3 3 0 0 0-1 4z"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3" /></symbol>
     <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M5 7l14 10M5 17L19 7"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-wind" viewBox="0 0 24 24"><path d="M3 8h10a2 2 0 1 0-2-2M3 12h16a2 2 0 1 1-2 2M3 16h10"/></symbol>
     <symbol id="i-humidity" viewBox="0 0 24 24"><path d="M12 3s6 6 6 10a6 6 0 0 1-12 0c0-4 6-10 6-10z"/></symbol>
     <symbol id="i-pressure" viewBox="0 0 24 24"><path d="M12 21a9 9 0 1 0-9-9 9 9 0 0 0 9 9zM12 12l4-3"/></symbol>
@@ -101,17 +129,19 @@
           <button class="btn" id="langBtn">DE/EN</button>
         </div>
       </div>
-      <div class="pill"><span>🖌️</span><span data-i="tagline">Verspielte DWD-Wetter-App – nur statische Dateien</span></div>
     </header>
 
     <main>
       <section class="card hero" aria-live="polite">
-        <div><svg width="64" height="64" viewBox="0 0 24 24"><use id="heroIcon" href="#i-clear-day"/></svg></div>
+        <div><svg class="hero-icon" width="64" height="64" viewBox="0 0 24 24"><use id="heroIcon" href="#i-clear-day"/></svg></div>
         <div>
           <h1 id="place">—</h1>
-          <div class="meta"><span id="summary">—</span> · <span id="updated">—</span></div>
+          <div class="meta" id="banter">—</div>
         </div>
-        <div class="big" id="temp">—°</div>
+        <div>
+          <div class="big" id="temp">—°</div>
+          <div class="meta" id="apparent">—</div>
+        </div>
       </section>
 
       <section class="card">
@@ -130,6 +160,7 @@
         <div class="card">
           <h3 style="margin-top:0" data-i="detailsTitle">Details</h3>
           <div style="display:grid; gap:8px">
+            <div class="row"><svg width="20" height="20"><use href="#i-clock"/></svg><div data-i="lastUpdated">Aktualisierung</div><div id="updated">—</div></div>
             <div class="row"><svg width="20" height="20"><use href="#i-wind"/></svg><div data-i="wind">Wind</div><div id="wind">—</div></div>
             <div class="row"><svg width="20" height="20"><use href="#i-humidity"/></svg><div data-i="humidity">Luftfeuchte</div><div id="humidity">—</div></div>
             <div class="row"><svg width="20" height="20"><use href="#i-pressure"/></svg><div data-i="pressure">Luftdruck</div><div id="pressure">—</div></div>
@@ -139,13 +170,17 @@
     </main>
 
     <footer class="card">
-      <div><strong>Credits &amp; Lizenzen</strong></div>
-      <div>
-        Wetterdaten: © Deutscher Wetterdienst (DWD), CC BY 4.0 – Produkt: MOSMIX.
-        Zugriff via <a href="https://brightsky.dev" target="_blank" rel="noopener">Bright Sky</a> (CORS-fähige JSON-API).
-      </div>
-      <div>Meteocons Icons (MIT, © Bas Milius) – eingebettetes Subset. Unser App-Code: GPL-3.0-or-later.</div>
-      <div style="margin-top:6px">Privatmodus-freundlich: Kein Tracking, keine Cookies.</div>
+      <details class="credits" id="creditsDetails">
+        <summary>Credits &amp; Lizenzen</summary>
+        <div class="credits-body">
+          <p>
+            Wetterdaten: © Deutscher Wetterdienst (DWD), CC BY 4.0 – Produkt: MOSMIX.
+            Zugriff via <a href="https://brightsky.dev" target="_blank" rel="noopener">Bright Sky</a> (CORS-fähige JSON-API).
+          </p>
+          <p>Meteocons Icons (MIT, © Bas Milius) – eingebettetes Subset. Unser App-Code: GPL-3.0-or-later.</p>
+          <p>Privatmodus-freundlich: Kein Tracking, keine Cookies.</p>
+        </div>
+      </details>
     </footer>
   </div>
 
@@ -155,23 +190,25 @@
 const I18N = {
   de: {
     useMyLocation:"Standort nutzen",
-    tagline:"Verspielte DWD-Wetter-App – nur statische Dateien",
     legendTemp:"Temperatur (°C)",
     legendPrec:"Niederschlag (mm/h)",
     nextDaysTitle:"Nächste Tage",
     detailsTitle:"Details",
     wind:"Wind", humidity:"Luftfeuchte", pressure:"Luftdruck",
-    updated:(t)=>`Aktualisiert: ${t}`
+    lastUpdated:"Letztes Update",
+    updated:(t)=>`Aktualisiert: ${t}`,
+    unknownPlace:"Unbekannter Ort"
   },
   en: {
     useMyLocation:"Use my location",
-    tagline:"Playful DWD weather app – static files only",
     legendTemp:"Temperature (°C)",
     legendPrec:"Precipitation (mm/h)",
     nextDaysTitle:"Next days",
     detailsTitle:"Details",
     wind:"Wind", humidity:"Humidity", pressure:"Pressure",
-    updated:(t)=>`Updated: ${t}`
+    lastUpdated:"Last update",
+    updated:(t)=>`Updated: ${t}`,
+    unknownPlace:"Unknown place"
   }
 };
 let lang = (navigator.language||"de").toLowerCase().startsWith("de") ? "de" : "en";
@@ -216,7 +253,15 @@ const BrightSky = {
   }
 };
 
-const S = { coords:null, place:"—", current:null, hourly:[], daily:[] };
+const S = { coords:null, place:"—", placeFallback:false, current:null, hourly:[], daily:[] };
+
+const TEST_COORDS = {
+  berlin:{lat:52.520008, lon:13.404954},
+  münchen:{lat:48.137154, lon:11.576124},
+  frankfurt:{lat:50.110924, lon:8.682127},
+  kiel:{lat:54.323293, lon:10.122765}
+};
+window.TEST_COORDS = TEST_COORDS;
 
 function fmt(n,d=0){ return (n==null||Number.isNaN(n))?"—":Number(n).toFixed(d); }
 function dir(deg){ const dirs=["N","NE","E","SE","S","SW","W","NW","N"]; return dirs[Math.round((deg||0)/45)]; }
@@ -229,17 +274,363 @@ const ICON_MAP = {
   "cloudy":"i-cloudy","fog":"i-cloudy","rain":"i-rain","sleet":"i-snow","snow":"i-snow","wind":"i-wind"
 };
 
+const ICON_TO_MOOD = {
+  "clear-day":"clear","clear-night":"clear",
+  "partly-cloudy-day":"cloudy","partly-cloudy-night":"cloudy",
+  "cloudy":"cloudy","fog":"fog","mist":"fog",
+  "rain":"rain","sleet":"rain","hail":"rain",
+  "snow":"snow","wind":"clear","thunderstorm":"storm","storm":"storm"
+};
+
+const GARDEN_BASES = {
+  dawn:{
+    base:"#0b1320",
+    baseLight:"#f8f5ff",
+    skyTop:"#fde4ff",
+    skyBottom:"#c3ddff",
+    highlight:"radial-gradient(1600px 1200px at 50% -30%, rgba(253,186,116,.18), transparent 65%)",
+    overlayDark:"linear-gradient(180deg, rgba(8,12,22,.58) 0%, rgba(8,11,19,.86) 100%)",
+    overlayLight:"linear-gradient(180deg, rgba(255,255,255,.7) 0%, rgba(246,248,251,.92) 100%)",
+    meta:"#0b1320"
+  },
+  day:{
+    base:"#07101d",
+    baseLight:"#f1fbff",
+    skyTop:"#c7e9ff",
+    skyBottom:"#8de4c8",
+    highlight:"radial-gradient(1600px 1200px at 60% -25%, rgba(148,221,255,.2), transparent 70%)",
+    overlayDark:"linear-gradient(180deg, rgba(4,7,15,.55) 0%, rgba(7,12,22,.88) 100%)",
+    overlayLight:"linear-gradient(180deg, rgba(255,255,255,.65) 0%, rgba(246,248,251,.92) 100%)",
+    meta:"#07101d"
+  },
+  dusk:{
+    base:"#140d23",
+    baseLight:"#f5f0ff",
+    skyTop:"#f5d0fe",
+    skyBottom:"#94a3f5",
+    highlight:"radial-gradient(1600px 1200px at 40% -20%, rgba(255,145,164,.2), transparent 70%)",
+    overlayDark:"linear-gradient(180deg, rgba(10,8,20,.65) 0%, rgba(12,9,25,.88) 100%)",
+    overlayLight:"linear-gradient(180deg, rgba(255,255,255,.6) 0%, rgba(246,248,251,.9) 100%)",
+    meta:"#140d23"
+  },
+  night:{
+    base:"#070b16",
+    baseLight:"#e8efff",
+    skyTop:"#0f172a",
+    skyBottom:"#312e81",
+    highlight:"radial-gradient(1600px 1200px at 50% -35%, rgba(76,29,149,.25), transparent 70%)",
+    overlayDark:"linear-gradient(180deg, rgba(6,9,20,.7) 0%, rgba(4,6,15,.92) 100%)",
+    overlayLight:"linear-gradient(180deg, rgba(240,246,255,.72) 0%, rgba(226,232,240,.95) 100%)",
+    meta:"#070b16"
+  }
+};
+
+const GARDEN_MOODS = {
+  clear:{ petal:"#f97316", accent:"#fde68a", leaf:"#22c55e", glow:"#fda4af", spark:"#fef08a" },
+  cloudy:{ petal:"#38bdf8", accent:"#a855f7", leaf:"#34d399", glow:"#c4b5fd", spark:"#e9d5ff" },
+  rain:{ petal:"#38bdf8", accent:"#0ea5e9", leaf:"#2dd4bf", glow:"#0284c7", spark:"#bae6fd" },
+  snow:{ petal:"#f8fafc", accent:"#38bdf8", leaf:"#bae6fd", glow:"#e0f2fe", spark:"#e0f2fe" },
+  fog:{ petal:"#cbd5f5", accent:"#94a3b8", leaf:"#94a3b8", glow:"#cbd5f5", spark:"#e2e8f0" },
+  storm:{ petal:"#f472b6", accent:"#facc15", leaf:"#10b981", glow:"#7c3aed", spark:"#fde68a" }
+};
+
+function themeTimeSlot(date){
+  const h = date.getHours();
+  if(h>=5 && h<9) return "dawn";
+  if(h>=9 && h<17) return "day";
+  if(h>=17 && h<21) return "dusk";
+  return "night";
+}
+
+function gardenMoodFromWeather(current){
+  if(!current) return "cloudy";
+  const icon = (current.icon||"").toLowerCase();
+  const resolved = ICON_TO_MOOD[icon];
+  if(resolved) return resolved;
+  const summary = (current.condition||"").toLowerCase();
+  if(summary.includes("snow")) return "snow";
+  if(summary.includes("rain") || summary.includes("shower") || summary.includes("drizzle")) return "rain";
+  if(summary.includes("storm") || summary.includes("thunder")) return "storm";
+  if(summary.includes("fog") || summary.includes("mist")) return "fog";
+  if(summary.includes("clear") || summary.includes("sun")) return "clear";
+  return "cloudy";
+}
+
+function hashString(str){
+  let h = 0;
+  for(let i=0;i<str.length;i++){
+    h = ((h<<5)-h) + str.charCodeAt(i);
+    h |= 0;
+  }
+  return Math.abs(h) + 1;
+}
+
+function seededRandom(seed){
+  let s = seed % 2147483647;
+  if(s<=0) s += 2147483646;
+  return function(){
+    s = s * 16807 % 2147483647;
+    return (s - 1) / 2147483646;
+  };
+}
+
+function createGardenSvg(palette, seed){
+  const rand = seededRandom(seed);
+  const gradId = "g"+(seed%10000);
+  const glowId = "gl"+(seed%10000);
+  const stems = [];
+  const blooms = [];
+  const leaves = [];
+  for(let i=0;i<7;i++){
+    const baseX = rand()*90 + 5;
+    const tipY = 38 + rand()*32;
+    const ctrlX = baseX + (rand()-.5)*18;
+    const ctrlY = tipY + (100 - tipY) * (0.45 + rand()*0.28);
+    const topX = baseX + (rand()-.5)*10;
+    const width = 0.6 + rand()*0.9;
+    stems.push(`<path d="M${baseX.toFixed(2)} 100 Q ${ctrlX.toFixed(2)} ${ctrlY.toFixed(2)} ${topX.toFixed(2)} ${tipY.toFixed(2)}" stroke="${palette.leaf}" stroke-width="${width.toFixed(2)}" fill="none" stroke-linecap="round" stroke-opacity="0.85"/>`);
+    const bloomRadius = 2.8 + rand()*3.2;
+    blooms.push(`<circle cx="${topX.toFixed(2)}" cy="${(tipY-1.2-rand()*2.2).toFixed(2)}" r="${bloomRadius.toFixed(2)}" fill="${palette.petal}" fill-opacity="0.9" stroke="${palette.accent}" stroke-opacity="0.6" stroke-width="${(0.5+rand()*0.6).toFixed(2)}"/>`);
+    if(rand()>0.35){
+      const leafX = baseX + (rand()-.5)*14;
+      const leafY = tipY + rand()*(100 - tipY - 6);
+      const leafRx = 2.8 + rand()*4.2;
+      const leafRy = 5 + rand()*7;
+      const rot = (rand()-.5)*70;
+      leaves.push(`<ellipse cx="${leafX.toFixed(2)}" cy="${leafY.toFixed(2)}" rx="${leafRx.toFixed(2)}" ry="${leafRy.toFixed(2)}" fill="${palette.leaf}" fill-opacity="0.22" transform="rotate(${rot.toFixed(2)} ${leafX.toFixed(2)} ${leafY.toFixed(2)})"/>`);
+    }
+  }
+  const sparkles = [];
+  for(let i=0;i<12;i++){
+    const size = rand();
+    const x = rand()*100;
+    const y = rand()*60;
+    const opacity = 0.12 + rand()*0.3;
+    const radius = 0.25 + size*1.15;
+    sparkles.push(`<circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="${radius.toFixed(2)}" fill="${palette.spark || palette.accent}" fill-opacity="${opacity.toFixed(2)}"/>`);
+  }
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="${palette.skyTop}"/>
+        <stop offset="100%" stop-color="${palette.skyBottom}"/>
+      </linearGradient>
+      <radialGradient id="${glowId}" cx="50%" cy="30%" r="60%">
+        <stop offset="0%" stop-color="${palette.glow || palette.accent}" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="${palette.glow || palette.accent}" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="100" height="100" fill="url(#${gradId})"/>
+    <rect width="100" height="100" fill="url(#${glowId})"/>
+    ${sparkles.join("")}
+    ${leaves.join("")}
+    ${stems.join("")}
+    ${blooms.join("")}
+  </svg>`;
+  const compact = svg.replace(/\s+/g," ").trim();
+  const encoded = encodeURIComponent(compact);
+  return `url("data:image/svg+xml;charset=UTF-8,${encoded}")`;
+}
+
+function buildGardenTheme(current){
+  const now = new Date(current && (current.timestamp || current.time || current.date) || Date.now());
+  const slot = themeTimeSlot(now);
+  const base = GARDEN_BASES[slot] || GARDEN_BASES.day;
+  const moodKey = gardenMoodFromWeather(current);
+  const mood = GARDEN_MOODS[moodKey] || GARDEN_MOODS.cloudy;
+  const prefersLight = typeof window!=="undefined" && window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+  const baseColor = prefersLight ? (base.baseLight || base.base) : base.base;
+  const palette = {...base, ...mood, base: baseColor};
+  const seedSource = `${slot}-${moodKey}-${Math.round((S.coords&&S.coords.lat||0)*100)}-${Math.round((S.coords&&S.coords.lon||0)*100)}-${now.getUTCDate()}`;
+  const seed = hashString(seedSource);
+  const svgLayer = createGardenSvg(palette, seed);
+  const overlay = prefersLight ? palette.overlayLight : palette.overlayDark;
+  const highlight = palette.highlight || "radial-gradient(1200px 600px at 70% -10%, rgba(255,255,255,.1), transparent 60%)";
+  const layers = `${overlay}, ${svgLayer}, ${highlight}, var(--bg)`;
+  return { layers, base: palette.base, accent: palette.accent, meta: palette.base };
+}
+
+function applyGardenTheme(){
+  const root = document.documentElement;
+  if(!root) return;
+  if(!S.current){
+    root.style.removeProperty("--hero-bg-layers");
+    return;
+  }
+  const preset = buildGardenTheme(S.current);
+  if(preset.layers){
+    root.style.setProperty("--hero-bg-layers", preset.layers);
+  }
+  if(preset.base){
+    root.style.setProperty("--bg", preset.base);
+  }
+  if(preset.accent){
+    root.style.setProperty("--accent", preset.accent);
+  }
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  if(themeMeta && preset.base){
+    themeMeta.setAttribute("content", preset.meta || preset.base);
+  }
+}
+
+function requestPosition(options){
+  return new Promise((resolve, reject)=>{
+    if(!("geolocation" in navigator)){
+      reject(new Error("geolocation unsupported"));
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(resolve, reject, options);
+  });
+}
+
+async function resolvePlace(lat, lon){
+  try{
+    const locale = lang==="de"?"de":"en";
+    const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${encodeURIComponent(lat)}&longitude=${encodeURIComponent(lon)}&localityLanguage=${locale}`;
+    const res = await fetch(url, {cache:"no-store"});
+    if(!res.ok) throw new Error("reverse geocode failed");
+    const data = await res.json();
+    const parts = [];
+    const pushUnique = value=>{
+      if(!value) return;
+      const clean = String(value).trim();
+      if(!clean) return;
+      if(!parts.some(p=>p.toLowerCase()===clean.toLowerCase())) parts.push(clean);
+    };
+    pushUnique(data.city);
+    pushUnique(data.locality);
+    if(data.localityInfo && Array.isArray(data.localityInfo.administrative)){
+      const admin = data.localityInfo.administrative.find(entry=>entry.order>=4 && entry.order<=6);
+      pushUnique(admin && (admin.city || admin.name));
+    }
+    pushUnique(data.principalSubdivision);
+    const country = data.countryName || data.countryCode;
+    if(parts.length===0 && country) pushUnique(country);
+    return parts.slice(0,2).join(", ") || parts[0] || country || null;
+  }catch(err){
+    console.warn("Reverse geocode failed", err);
+    return null;
+  }
+}
+
+const BANTER_LINES = {
+  rain:[
+    "Es pisst mehr als deine Nachbarn nach dem dritten Glühwein.",
+    "Draußen regnet's wie aus 'ner kaputten Dachrinne – viel Spaß damit.",
+    "So nass, dass selbst deine Laune Schimmel ansetzt.",
+    "Das ist kein Wetter, das ist 'ne gratis Dusche mit Dreckgarantie.",
+    "Regen deluxe – perfekt um jede Frisur in Sekunden zu ruinieren."
+  ],
+  snow:[
+    "Schneechaos deluxe – zieh was Warmes an, du Frostbeule.",
+    "Mehr Pulver als in der Après-Ski-Bar, aber genauso nervig.",
+    "Es flockt wie in einer kitschigen RomCom, nur ohne Happy End.",
+    "Schuhe an, sonst frieren dir die Zehen ab wie schlechte Ausreden.",
+    "So viel Schnee, dass selbst der Winterdienst weint."
+  ],
+  storm:[
+    "Blitzt und rummst, beste Zeit um Dramatik zu üben.",
+    "Der Wind schreit lauter als dein Wecker – halt dich fest.",
+    "Sturmstiefel an, sonst weht dich die Realität um.",
+    "Da draußen tobt 'ne Rockshow und du bist ohne Ticket.",
+    "Mehr Orkan als Ordnung – lass den Regenschirm gleich zu Hause."
+  ],
+  fog:[
+    "Nebel wie in 'nem schlechten Tatort – siehst nix, fühlst nix.",
+    "So neblig, dass selbst dein Navi erstmal nen Kaffee braucht.",
+    "Alles grau, alles dicht – willkommen im Berliner Spätabend.",
+    "Wenn du jetzt Auto fährst, nimm gleich 'ne Nebelhupe mit.",
+    "Dichter als ein Verschwörungspodcast – und doppelt nervig."
+  ],
+  heat:[
+    "Es ist so heiß, dass sogar dein Humor schmilzt.",
+    "Backofen-Feeling gratis – du bist das Grillgut.",
+    "Sonne prügelt dich weich, trink was bevor du klappst.",
+    "Schwitz-Level: Sauna plus schlechter Smalltalk.",
+    "Schattensucher werden heute zu echten Überlebenskünstlern."
+  ],
+  cold:[
+    "Eiskalt – deine Ausreden sollten wenigstens warm sein.",
+    "So frostig, dass selbst dein Handy knirscht.",
+    "Kälter als der Blick deiner Ex, also zieh dich an.",
+    "Die Luft beißt – und nein, das ist kein Kompliment.",
+    "Du bist gleich Tiefkühlkost, wenn du da so rumstehst."
+  ],
+  clear:[
+    "Sonne satt, also raus mit dir und tu so als hättest du Vitamin D.",
+    "Blauer Himmel, perfekte Kulisse für dein Überheblichkeits-Selfie.",
+    "Mieser Tag für Ausreden drinnen zu bleiben – ab nach draußen.",
+    "Klarer Himmel, dein Drama musst du selber mitbringen.",
+    "Die Sonne ballert freundlich, gönn dir wenigstens ne Sonnenbrille."
+  ],
+  cloud:[
+    "Wolkensuppe, perfekt um miesepetrig zu gucken.",
+    "So viel Grau, dass sogar Beton neidisch wird.",
+    "Die Wolken hängen tiefer als dein Energielevel.",
+    "Stimmung wie Kantinenkaffee – lau und fragwürdig.",
+    "Nix los am Himmel, also sorg du für Unterhaltung."
+  ],
+  default:[
+    "Da draußen herrscht gerade Wetter für Leute ohne Modegeschmack.",
+    "Der Himmel macht Faxen, pack dir wenigstens Laufschuhe ein.",
+    "Diese Luft fühlt sich an wie ein schlechter Witz vom Stammtisch.",
+    "Wenn du jetzt rausgehst, beschwer dich hinterher nicht bei mir.",
+    "Reicht fürs Bier im Freien, aber frag nicht nach Stil."
+  ]
+};
+
+function pickBanter(key){
+  const list = BANTER_LINES[key] || BANTER_LINES.default;
+  return list[Math.floor(Math.random()*list.length)];
+}
+
+function weatherBanter(cur){
+  const icon = (cur.icon||"").toLowerCase();
+  const temp = cur.temperature;
+  const feels = cur.apparent_temperature ?? temp;
+  if(icon.includes("rain") || icon.includes("sleet")){
+    return pickBanter("rain");
+  }
+  if(icon.includes("snow")){
+    return pickBanter("snow");
+  }
+  if(icon.includes("storm") || icon.includes("thunder")){
+    return pickBanter("storm");
+  }
+  if(icon.includes("fog")){
+    return pickBanter("fog");
+  }
+  if((feels??0) >= 28){
+    return pickBanter("heat");
+  }
+  if((feels??0) <= 0){
+    return pickBanter("cold");
+  }
+  if(icon.includes("clear")){
+    return pickBanter("clear");
+  }
+  if(icon.includes("cloud")){
+    return pickBanter("cloud");
+  }
+  return pickBanter("default");
+}
+
 function setHero(){
   const c = S.current; if(!c) return;
-  $("#place").textContent = S.place || `${fmt(S.coords.lat,2)}, ${fmt(S.coords.lon,2)}`;
+  const placeText = S.placeFallback ? t("unknownPlace") : (S.place || t("unknownPlace"));
+  const iconId = ICON_MAP[c.icon] || "i-partly-cloudy-day";
+  $("#heroIcon").setAttribute("href", "#"+iconId);
+  $("#place").textContent = placeText;
   $("#temp").textContent = fmt(c.temperature,0)+"°";
-  $("#summary").textContent = (c.condition||"").replace(/-/g," ") || "—";
-  $("#updated").textContent = t("updated", new Date(c.timestamp||Date.now()).toLocaleString(lang));
+  const feelsLike = c.apparent_temperature ?? c.dew_point ?? null;
+  $("#apparent").textContent = feelsLike==null ? "fühlt sich an wie —" : `fühlt sich an wie ${fmt(feelsLike,0)}°`;
+  $("#banter").textContent = weatherBanter(c);
+  const updatedAt = new Date(c.timestamp||Date.now());
+  $("#updated").textContent = updatedAt.toLocaleString(lang);
   $("#wind").textContent = `${fmt(c.wind_speed,1)} m/s ${dir(c.wind_direction)}`;
   $("#humidity").textContent = `${fmt(c.relative_humidity,0)} %`;
   $("#pressure").textContent = `${fmt(c.pressure_msl,0)} hPa`;
-  const iconId = ICON_MAP[c.icon] || "i-partly-cloudy-day";
-  $("#heroIcon").setAttribute("href", "#"+iconId);
+  applyGardenTheme();
 }
 
 function renderHourlyChart(){
@@ -344,7 +735,23 @@ async function loadAll(lat, lon){
   S.coords = {lat, lon};
   const cur = await BrightSky.current(lat, lon);
   S.current = (cur||{}).weather || cur || {};
-  S.place = (cur&&cur.station&&cur.station.name) || (cur&&cur.source&&cur.source.station_name) || `${fmt(lat,2)}, ${fmt(lon,2)}`;
+  const stationName =
+    (cur && cur.station && (cur.station.name || cur.station.id || cur.station.identifier)) ||
+    (cur && cur.source && (cur.source.station_name || cur.source.name)) ||
+    (S.current && (S.current.station_name || S.current.station || S.current.source_station_name)) ||
+    (cur && cur.city) ||
+    null;
+  let prettyPlace = await resolvePlace(lat, lon);
+  if(prettyPlace){
+    S.place = prettyPlace;
+    S.placeFallback = false;
+  }else if(stationName){
+    S.place = stationName;
+    S.placeFallback = false;
+  }else{
+    S.place = null;
+    S.placeFallback = true;
+  }
   const h = await BrightSky.hourly(lat, lon, 48);
   S.hourly = h.weather || [];
   S.daily = await BrightSky.daily(lat, lon, 8);
@@ -376,14 +783,32 @@ function wire(){
 
 async function init(){
   setBuild(); applyI18n(); wire();
+  let loaded = false;
+  const loadFallback = async ()=>{
+    if(loaded) return;
+    try{
+      await loadAll(52.52, 13.405);
+      loaded = true;
+    }catch(err){ console.error(err); }
+  };
   try{
     const qs = new URLSearchParams(location.search);
     if(qs.has("lat") && qs.has("lon")){
       await loadAll(+qs.get("lat"), +qs.get("lon"));
+      loaded = true;
     }else{
-      await loadAll(52.52, 13.405); // Berlin
+      try{
+        const pos = await requestPosition({enableHighAccuracy:true, timeout:10000});
+        const {latitude:lat, longitude:lon} = pos.coords;
+        $("#coord").value = `${lat.toFixed(5)},${lon.toFixed(5)}`;
+        await loadAll(lat, lon);
+        loaded = true;
+      }catch(geoError){
+        console.warn("Auto geolocation failed", geoError);
+      }
     }
   }catch(e){ console.error(e); }
+  await loadFallback();
   if("serviceWorker" in navigator){
     try{ await navigator.serviceWorker.register("./sw.js"); }catch(e){ console.warn("SW failed", e); }
   }
